@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
+import styled from 'styled-components/native';
 
 const ConversionForm = ({ currencies }) => {
   const [baseCurrency, setBaseCurrency] = useState('USD');
@@ -18,36 +19,65 @@ const ConversionForm = ({ currencies }) => {
   };
 
   return (
-    <View>
-      <Text style={{ fontSize: 20, fontWeight: 'bold', marginBottom: 10 }}>
-        Que souhaitez-vous convertir ?
-      </Text>
-      <TextInput
-        style={{ fontSize: 16, padding: 10, marginBottom: 10 }}
+    <Container>
+      <Title>Que souhaitez-vous convertir ?</Title>
+      <Input
         value={amount}
         keyboardType="numeric"
+        placeholder="Montant"
         onChangeText={(text) => setAmount(text)}
       />
-      <TextInput
-        style={{ fontSize: 16, padding: 10, marginBottom: 10 }}
+      <Input
         value={baseCurrency}
+        placeholder="Devise de départ"
         onChangeText={(text) => setBaseCurrency(text.toUpperCase())}
       />
-      <TextInput
-        style={{ fontSize: 16, padding: 10, marginBottom: 20 }}
+      <Input
         value={targetCurrency}
+        placeholder="Devise cible"
         onChangeText={(text) => setTargetCurrency(text.toUpperCase())}
       />
-      <Button title="Convertir" onPress={handleConvert} />
+      <ConvertButton title="Convertir" onPress={handleConvert} />
       {result ? (
-        <Text style={{ fontSize: 20, fontWeight: 'bold', marginTop: 20 }}>
+        <ResultText>
           {result.toFixed(2)} {targetCurrency}
-        </Text>
+        </ResultText>
       ) : (
-        <Text style={{ fontSize: 20, marginTop: 20 }}>Résultat</Text>
+        <ResultText>Résultat</ResultText>
       )}
-    </View>
+    </Container>
   );
 };
+
+const Container = styled.View`
+  flex: 1;
+  align-items: center;
+  padding: 20px;
+`;
+
+const Title = styled.Text`
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+`;
+
+const Input = styled.TextInput`
+  font-size: 16px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+`;
+
+const ConvertButton = styled.Button`
+  margin-top: 20px;
+`;
+
+const ResultText = styled.Text`
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 20px;
+`;
 
 export default ConversionForm;
