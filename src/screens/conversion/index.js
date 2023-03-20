@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
+import { BASE_API_KEY } from '../../config/config';
 import styled from 'styled-components/native';
 
 const ConversionForm = ({ currencies }) => {
@@ -11,7 +12,7 @@ const ConversionForm = ({ currencies }) => {
   const handleConvert = async () => {
     const response = await fetch(`https://api.api-ninjas.com/v1/convertcurrency?have=${baseCurrency}&want=${targetCurrency}&amount=${amount}`, {
       headers: {
-        'X-API-Key': '',
+        'X-API-Key': BASE_API_KEY,
       },
     });
     const data = await response.json();
