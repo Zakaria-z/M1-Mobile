@@ -11,7 +11,7 @@ const ConversionForm = ({ currencies }) => {
   const handleConvert = async () => {
     const response = await fetch(`https://api.api-ninjas.com/v1/convertcurrency?have=${baseCurrency}&want=${targetCurrency}&amount=${amount}`, {
       headers: {
-        'X-API-Key': 'yzyUsa/zCHPwf/T7l2xdrw==t1cJs3ER576Xc8AV',
+        'X-API-Key': '',
       },
     });
     const data = await response.json();
