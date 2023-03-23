@@ -1,21 +1,41 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
 import styled from 'styled-components/native';
+import axios from 'axios';
+import { BASE_API_KEY } from '../../config/config';
 
 const ConversionForm = ({ currencies }) => {
-  const [baseCurrency, setBaseCurrency] = useState('USD');
-  const [targetCurrency, setTargetCurrency] = useState('EUR');
+  const [baseCurrency, setBaseCurrency] = useState('');
+  const [targetCurrency, setTargetCurrency] = useState('');
   const [amount, setAmount] = useState('1');
   const [result, setResult] = useState(null);
-console.log('currencies', currencies)
-  const handleConvert = async () => {
-    const response = await fetch(`https://api.api-ninjas.com/v1/convertcurrency?have=${baseCurrency}&want=${targetCurrency}&amount=${amount}`, {
+
+  const fetchConvert = async () => {
+    try {
+    const response = await axios.get(`https://api.api-ninjas.com/v1/convertcurrency?have=${baseCurrency}&want=${targetCurrency}&amount=${amount}`, {
       headers: {
-        'X-API-Key': 'CdAFfp5LmH3PtcYiMwI1blKcfTDYwMoP4J1XkcrH',
+        'X-API-Key': BASE_API_KEY,
+        'Content-Type': 'application/json',
       },
     });
-    const data = await response.json();
-    setResult(data.result);
+    return response.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleConvert = async () => {
+    const result = await fetchConvert();
+    console.log('result:', result);
+    setResult(result);
+  };
+
+  const HandleTextChangeBaseCurrency = (text) => {
+    setBaseCurrency(text);
+  };
+
+  const HandleTextChangeTargetCurrency = (text) => {
+    setTargetCurrency(text);
   };
 
   return (
@@ -30,21 +50,24 @@ console.log('currencies', currencies)
       <Input
         value={baseCurrency}
         placeholder="Devise de départ"
-        onChangeText={(text) => setBaseCurrency(text.toUpperCase())}
+        onChangeText={HandleTextChangeBaseCurrency}
       />
       <Input
         value={targetCurrency}
         placeholder="Devise cible"
-        onChangeText={(text) => setTargetCurrency(text.toUpperCase())}
+        onChangeText={HandleTextChangeTargetCurrency}
       />
       <ConvertButton title="Convertir" onPress={handleConvert} />
-      {result ? (
-        <ResultText>
-          {result.toFixed(2)} {targetCurrency}
-        </ResultText>
-      ) : (
-        <ResultText>Résultat</ResultText>
-      )}
+     
+      {
+        result && (
+          <ResultText>
+            {result.new_amount.toFixed(2)} {result.new_currency}
+          </ResultText>
+        )
+      }
+
+
     </Container>
   );
 };
