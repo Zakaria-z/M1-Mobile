@@ -1,22 +1,35 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
-import { BASE_API_KEY } from '../../config/config';
 import styled from 'styled-components/native';
+import { BASE_API_KEY } from '../../config/config';
 
 const ConversionForm = ({ currencies }) => {
   const [baseCurrency, setBaseCurrency] = useState('USD');
   const [targetCurrency, setTargetCurrency] = useState('EUR');
   const [amount, setAmount] = useState('1');
-  const [result, setResult] = useState(null);
+  const [result, setResult] = useState([]);
 
   const handleConvert = async () => {
-    const response = await fetch(`https://api.api-ninjas.com/v1/convertcurrency?have=${baseCurrency}&want=${targetCurrency}&amount=${amount}`, {
-      headers: {
-        'X-API-Key': BASE_API_KEY,
-      },
-    });
-    const data = await response.json();
-    setResult(data.result);
+    try {
+      const response = await fetch(
+        `https://api.api-ninjas.com/v1/convertcurrency?want=${targetCurrency}&have=${baseCurrency}&amount=${amount}`,
+        {
+          headers: {
+            'X-Api-Key': BASE_API_KEY,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}`);
+      }
+
+      const data = await response.json();
+      setResult(data.result);
+    } catch (error) {
+      console.error('Request failed:', error);
+      throw error;
+    }
   };
 
   return (
@@ -41,7 +54,7 @@ const ConversionForm = ({ currencies }) => {
       <ConvertButton title="Convertir" onPress={handleConvert} />
       {result ? (
         <ResultText>
-          {result.toFixed(2)} {targetCurrency}
+          {result} {targetCurrency}
         </ResultText>
       ) : (
         <ResultText>Résultat</ResultText>
