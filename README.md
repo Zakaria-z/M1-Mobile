@@ -1,22 +1,23 @@
 Projet M1 Mobile - Zakaria
 ------------------
 
-Screens
+1.	Screens
 
-Home : page d'accueil
-Conversion: page pour convertir les différentes devises
+	•	Home : page d'accueil
 
-Components
+	•	Conversion: page pour convertir les différentes devises
 
-Amount: Composant React Native de champ de saisie pour les montants.
+2.	Components
 
-Currency: Composant React Native de champ de saisie pour les valeurs monétaires avec une devise spécifique.
+	•	Amount: Composant React Native de champ de saisie pour les montants.
 
-Result: Composant qui affiche le résultat de la conversion de devises à partir des valeurs saisies dans les composants AmountInput et CurrencyPicker.
+	•	Currency: Composant React Native de champ de saisie pour les valeurs monétaires avec une devise spécifique.
 
-SelectCurrency: Composant qui permet à l'utilisateur de sélectionner une devise parmi une liste de devises disponibles pour la conversion de devises.
+	•	Result: Composant qui affiche le résultat de la conversion de devises à partir des valeurs saisies dans les composants AmountInput et CurrencyPicker.
 
-API src/API/
+	•	SelectCurrency: Composant qui permet à l'utilisateur de sélectionner une devise parmi une liste de devises disponibles pour la conversion de devises.
 
-https://api.api-ninjas.com/v1/convertcurrency? pour la conversion de devise 
- 
+3.	API src/API/
+
+	•	https://api.api-ninjas.com/v1/convertcurrency? pour la conversion de devise 
+
