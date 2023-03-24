@@ -21,3 +21,5 @@ Projet M1 Mobile - Zakaria
 
 	•	https://api.api-ninjas.com/v1/convertcurrency? pour la conversion de devise 
 
+	![GIF](AndroidGIF_2.gif)
+

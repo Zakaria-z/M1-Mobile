@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
+import { ActivityIndicator } from 'react-native';
 
 import ResultConvert from '../../components/Result/ResultConvert';
 import AmountInput from '../../components/Amount/AmountInput';
@@ -21,17 +22,27 @@ const currenciesList = [
     const [targetCurrency, setTargetCurrency] = useState('');
     const [amount, setAmount] = useState('1');
     const [result, setResult] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const handleConvert = async () => {
-      const conversionResult = await fetchConvert(baseCurrency, targetCurrency, amount);
-      console.log('result:', conversionResult);
-      setResult(conversionResult);
+      setLoading(true);
+      try {
+        const conversionResult = await fetchConvert(baseCurrency, targetCurrency, amount);
+        console.log('result:', conversionResult);
+        setResult(conversionResult);
+      } catch (error) {
+        console.error('Erreur lors de la conversion:', error);
+      }
+      setLoading(false);
     };
+
+    const isButtonDisabled = () => baseCurrency === targetCurrency || !baseCurrency || !targetCurrency;
+        
   
   return (
+    
     <Container>
       <Title>Que souhaitez-vous convertir ?</Title>
-      
       <AmountInput amount={amount} setAmount={setAmount} />
       
       <CurrencyPicker
@@ -48,8 +59,10 @@ const currenciesList = [
         items={currenciesList}
       />
       
-      <ConvertButton title="Convertir" onPress={handleConvert} />
-     
+      <ConvertButton title="Convertir" onPress={handleConvert} disabled={isButtonDisabled()} />
+
+      {loading && <ActivityIndicator size="large" color="#0000ff" />}
+      
       {result && <ResultConvert result={result} />}
 
     </Container>
