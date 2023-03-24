@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
+import { TextInput, Button } from 'react-native';
 import styled from 'styled-components/native';
 import axios from 'axios';
 import { BASE_API_KEY } from '../../config/config';
@@ -75,32 +75,36 @@ const ConversionForm = ({ currencies }) => {
 const Container = styled.View`
   flex: 1;
   align-items: center;
+  justify-content: center;
   padding: 20px;
+  background-color: #fff;
 `;
 
 const Title = styled.Text`
-  font-size: 20px;
+  font-size: 24px;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 `;
 
 const Input = styled.TextInput`
-  font-size: 16px;
-  padding: 10px;
-  margin-bottom: 10px;
+  font-size: 20px;
+  padding: 15px;
+  margin-bottom: 20px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 10px;
   width: 100%;
+  background-color: #fff;
 `;
 
 const ConvertButton = styled.Button`
-  margin-top: 20px;
+  margin-top: 30px;
+  width: 50%;
+  border-radius: 10px;
 `;
 
 const ResultText = styled.Text`
-  font-size: 20px;
+  font-size: 30px;
   font-weight: bold;
-  margin-top: 20px;
 `;
 
 export default ConversionForm;
