@@ -3,37 +3,49 @@ import styled from 'styled-components/native';
 
 import ResultConvert from '../../components/Result/ResultConvert';
 import AmountInput from '../../components/Amount/AmountInput';
-import CurrencyInput from '../../components/Currency/CurrencyInput';
 import { fetchConvert } from '../../API/CurrencyConvertAPI';
+import CurrencyPicker from '../../components/SelectCurrency/CurrencyPicker'; 
 
-const ConversionForm = ({ currencies }) => {
-  const [baseCurrency, setBaseCurrency] = useState('');
-  const [targetCurrency, setTargetCurrency] = useState('');
-  const [amount, setAmount] = useState('1');
-  const [result, setResult] = useState(null);
 
-  const handleConvert = async () => {
-    const conversionResult = await fetchConvert(baseCurrency, targetCurrency, amount);
-    console.log('result:', conversionResult);
-    setResult(conversionResult);
-  };
+const currenciesList = [
+  { label: 'United States Dollar', value: 'USD' },
+  { label: 'Euro', value: 'EUR' },
+  { label: 'Argentine Peso', value: 'ARS' },
+  { label: 'Japanese Yen', value: 'JPY' },
+  { label: 'Saudi Riyal', value: 'SAR' },
+  { label: 'Algerian Dinar', value: 'DZD' },
 
+];
+  const ConversionForm = ({ currencies }) => {
+    const [baseCurrency, setBaseCurrency] = useState('');
+    const [targetCurrency, setTargetCurrency] = useState('');
+    const [amount, setAmount] = useState('1');
+    const [result, setResult] = useState(null);
+
+    const handleConvert = async () => {
+      const conversionResult = await fetchConvert(baseCurrency, targetCurrency, amount);
+      console.log('result:', conversionResult);
+      setResult(conversionResult);
+    };
+  
   return (
     <Container>
       <Title>Que souhaitez-vous convertir ?</Title>
       
       <AmountInput amount={amount} setAmount={setAmount} />
       
-      <CurrencyInput
+      <CurrencyPicker
         value={baseCurrency}
         placeholder="Devise de départ"
-        onChangeText={setBaseCurrency}
+        onValueChange={setBaseCurrency}
+        items={currenciesList}
       />
       
-      <CurrencyInput
+      <CurrencyPicker
         value={targetCurrency}
         placeholder="Devise cible"
-        onChangeText={setTargetCurrency}
+        onValueChange={setTargetCurrency}
+        items={currenciesList}
       />
       
       <ConvertButton title="Convertir" onPress={handleConvert} />

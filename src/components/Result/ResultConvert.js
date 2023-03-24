@@ -7,7 +7,7 @@ import styled from 'styled-components/native';
 //   font-weight: bold;
 // `; // Ne fonctionne pas
 
-const ResultDisplay = ({ result }) => {
+const ResultConvert = ({ result }) => {
   return (
     <Text style={{ fontSize: 40, fontWeight: 'bold' }}>
       {result.new_amount.toFixed(2)} {result.new_currency}
