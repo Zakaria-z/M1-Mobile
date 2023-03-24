@@ -1,5 +1,11 @@
 import React from 'react';
 import { Text } from 'react-native';
+import styled from 'styled-components/native';
+
+// const ResultText = styled.Text`
+//   font-size: 40px;
+//   font-weight: bold;
+// `; // Ne fonctionne pas
 
 const ResultDisplay = ({ result }) => {
   return (
@@ -9,4 +15,4 @@ const ResultDisplay = ({ result }) => {
   );
 };
 
-export default ResultDisplay;
+export default ResultConvert;

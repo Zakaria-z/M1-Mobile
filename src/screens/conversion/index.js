@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components/native';
-import axios from 'axios';
-import { BASE_API_KEY } from '../../config/config';
+
 import ResultConvert from '../../components/Result/ResultConvert';
 import AmountInput from '../../components/Amount/AmountInput';
 import CurrencyInput from '../../components/Currency/CurrencyInput';
+import { fetchConvert } from '../../API/CurrencyConvertAPI';
 
 const ConversionForm = ({ currencies }) => {
   const [baseCurrency, setBaseCurrency] = useState('');
@@ -12,32 +12,10 @@ const ConversionForm = ({ currencies }) => {
   const [amount, setAmount] = useState('1');
   const [result, setResult] = useState(null);
 
-  const fetchConvert = async () => {
-    try {
-    const response = await axios.get(`https://api.api-ninjas.com/v1/convertcurrency?have=${baseCurrency}&want=${targetCurrency}&amount=${amount}`, {
-      headers: {
-        'X-API-Key': BASE_API_KEY,
-        'Content-Type': 'application/json',
-      },
-    });
-    return response.data;
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const handleConvert = async () => {
-    const result = await fetchConvert();
-    console.log('result:', result);
-    setResult(result);
-  };
-
-  const HandleTextChangeBaseCurrency = (text) => {
-    setBaseCurrency(text);
-  };
-
-  const HandleTextChangeTargetCurrency = (text) => {
-    setTargetCurrency(text);
+    const conversionResult = await fetchConvert(baseCurrency, targetCurrency, amount);
+    console.log('result:', conversionResult);
+    setResult(conversionResult);
   };
 
   return (
@@ -49,22 +27,18 @@ const ConversionForm = ({ currencies }) => {
       <CurrencyInput
         value={baseCurrency}
         placeholder="Devise de départ"
-        onChangeText={HandleTextChangeBaseCurrency}
+        onChangeText={setBaseCurrency}
       />
       
       <CurrencyInput
         value={targetCurrency}
         placeholder="Devise cible"
-        onChangeText={HandleTextChangeTargetCurrency}
+        onChangeText={setTargetCurrency}
       />
       
       <ConvertButton title="Convertir" onPress={handleConvert} />
      
-      {
-        result && (
-            <ResultConvert result={result} />
-        )
-      }
+      {result && <ResultConvert result={result} />}
 
     </Container>
   );
