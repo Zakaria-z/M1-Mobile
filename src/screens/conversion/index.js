@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { TextInput, Button } from 'react-native';
 import styled from 'styled-components/native';
 import axios from 'axios';
 import { BASE_API_KEY } from '../../config/config';
+import ResultConvert from '../../components/Result/ResultConvert';
+import AmountInput from '../../components/Amount/AmountInput';
+import CurrencyInput from '../../components/Currency/CurrencyInput';
 
 const ConversionForm = ({ currencies }) => {
   const [baseCurrency, setBaseCurrency] = useState('');
@@ -41,32 +43,28 @@ const ConversionForm = ({ currencies }) => {
   return (
     <Container>
       <Title>Que souhaitez-vous convertir ?</Title>
-      <Input
-        value={amount}
-        keyboardType="numeric"
-        placeholder="Montant"
-        onChangeText={(text) => setAmount(text)}
-      />
-      <Input
+      
+      <AmountInput amount={amount} setAmount={setAmount} />
+      
+      <CurrencyInput
         value={baseCurrency}
         placeholder="Devise de départ"
         onChangeText={HandleTextChangeBaseCurrency}
       />
-      <Input
+      
+      <CurrencyInput
         value={targetCurrency}
         placeholder="Devise cible"
         onChangeText={HandleTextChangeTargetCurrency}
       />
+      
       <ConvertButton title="Convertir" onPress={handleConvert} />
      
       {
         result && (
-          <ResultText>
-            {result.new_amount.toFixed(2)} {result.new_currency}
-          </ResultText>
+            <ResultConvert result={result} />
         )
       }
-
 
     </Container>
   );
@@ -86,25 +84,10 @@ const Title = styled.Text`
   margin-bottom: 20px;
 `;
 
-const Input = styled.TextInput`
-  font-size: 20px;
-  padding: 15px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  width: 100%;
-  background-color: #fff;
-`;
-
 const ConvertButton = styled.Button`
   margin-top: 30px;
   width: 50%;
   border-radius: 10px;
-`;
-
-const ResultText = styled.Text`
-  font-size: 30px;
-  font-weight: bold;
 `;
 
 export default ConversionForm;
