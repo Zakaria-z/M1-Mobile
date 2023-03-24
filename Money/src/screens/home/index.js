@@ -2,6 +2,19 @@ import React from 'react';
 import { View, Text, Button } from 'react-native';
 import styled from 'styled-components/native';
 
+const HomeScreen = ({ navigation }) => {
+  return (
+    <Container>
+      <BackgroundImage source={require('../../images/background.jpg')}>
+        <Logo source={require('../../images/logo.png')} />
+        <Title>Money Maze</Title>
+        <Description>Tous les chemins mènent à la conversion - choisissez celui qui vous convient avec notre application.</Description>
+        <Button title="Commencer" onPress={() => navigation.navigate('Conversion')} />
+      </BackgroundImage>
+    </Container>
+  );
+};
+
 const Container = styled.View`
   flex: 1;
   justify-content: center;
@@ -38,18 +51,5 @@ const Description = styled.Text`
   color: #fff;
   margin-top: 20px;
 `;
-
-const HomeScreen = ({ navigation }) => {
-  return (
-    <Container>
-      <BackgroundImage source={require('../../images/background.jpg')}>
-        <Logo source={require('../../images/logo.png')} />
-        <Title>Money Maze</Title>
-        <Description>Tous les chemins mènent à la conversion - choisissez celui qui vous convient avec notre application.</Description>
-        <Button title="Commencer" onPress={() => navigation.navigate('Conversion')} />
-      </BackgroundImage>
-    </Container>
-  );
-};
 
 export default HomeScreen;
