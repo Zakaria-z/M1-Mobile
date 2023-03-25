@@ -16,6 +16,9 @@ Projet M1 Mobile - Zakaria
 	•	Result: Composant qui affiche le résultat de la conversion de devises à partir des valeurs saisies dans les composants AmountInput et CurrencyPicker.
 
 	•	SelectCurrency: Composant qui permet à l'utilisateur de sélectionner une devise parmi une liste de devises disponibles pour la conversion de devises.
+	
+	•	Message : Composant qui permet la gestion des messages affichés à l'utilisateur.
+
 
 3.	API src/API/
 
