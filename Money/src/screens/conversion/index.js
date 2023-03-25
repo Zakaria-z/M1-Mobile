@@ -6,6 +6,7 @@ import ResultConvert from '../../components/Result/ResultConvert';
 import AmountInput from '../../components/Amount/AmountInput';
 import { fetchConvert } from '../../API/CurrencyConvertAPI';
 import CurrencyPicker from '../../components/SelectCurrency/CurrencyPicker'; 
+import Message from '../../components/Message/message';
 
 
 const currenciesList = [
@@ -23,22 +24,29 @@ const currenciesList = [
     const [amount, setAmount] = useState('1');
     const [result, setResult] = useState(null);
     const [loading, setLoading] = useState(false);
-
+    const [message, setMessage] = useState({ type: '', content: '' });
+    
     const handleConvert = async () => {
       setLoading(true);
       try {
         const conversionResult = await fetchConvert(baseCurrency, targetCurrency, amount);
         console.log('result:', conversionResult);
         setResult(conversionResult);
+        showMessage('success', 'La conversion a été effectuée avec succès.');
       } catch (error) {
         console.error('Erreur lors de la conversion:', error);
+        showMessage('error', "Une erreur s'est produite lors de la conversion. Veuillez réessayer."); 
       }
       setLoading(false);
     };
 
+    const showMessage = (type, content) => {
+      setMessage({ type, content });
+      setTimeout(() => setMessage({ type: '', content: '' }), 5000);
+    };
+    
     const isButtonDisabled = () => baseCurrency === targetCurrency || !baseCurrency || !targetCurrency;
         
-  
   return (
     
     <Container>
@@ -64,6 +72,9 @@ const currenciesList = [
       {loading && <ActivityIndicator size="large" color="#0000ff" />}
       
       {result && <ResultConvert result={result} />}
+
+      {message.content && <Message type={message.type}>{message.content}</Message>}
+
 
     </Container>
   );
